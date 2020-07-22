@@ -1,0 +1,168 @@
+
+<html>
+	<head>
+		<title>辩论赛</title>
+<!-- 倒计时 -->
+		<script type="text/javascript">
+		var t;
+
+		// var fayanren={
+		// 	c_id:0,
+		// 	current:null,
+		// 	ren:[
+		// 		{id:0,name: "正方一辩发言",alltime: 242,usedtime:235},
+		// 		{id:1,name: "反方一辩发言",alltime: 242,usedtime:235},
+		// 		{id:2,name: "正方二辩发言",alltime: 92, usedtime:85},
+		// 		{id:3,name: "反方二辩发言",alltime: 92, usedtime:85},
+		// 		{id:4,name: "正方三辩发言",alltime: 92, usedtime:85},
+		// 		{id:5,name: "反方三辩发言",alltime: 92, usedtime:85},
+		// 		{id:6,name: "自由辩论 ",  alltime: 602, usedtime:595},
+		// 		{id:7,name: "正方四辩发言",alltime: 122,usedtime:115},
+		// 		{id:8,name: "反方四辩发言",alltime: 122,usedtime:115},
+		// 	],
+		// };
+
+		var fayanren={
+			c_id:0,
+			current:null,
+			ren:[
+				{id:0,name: "正方一辩发言",alltime: 242,usedtime:0},
+				{id:1,name: "反方一辩发言",alltime: 242,usedtime:0},
+				{id:2,name: "正方二辩发言",alltime: 92, usedtime:0},
+				{id:3,name: "反方二辩发言",alltime: 92, usedtime:0},
+				{id:4,name: "正方三辩发言",alltime: 92, usedtime:0},
+				{id:5,name: "反方三辩发言",alltime: 92, usedtime:0},
+				{id:6,name: "自由辩论 ",  alltime: 602, usedtime:0},
+				{id:7,name: "正方四辩发言",alltime: 122,usedtime:0},
+				{id:8,name: "反方四辩发言",alltime: 122,usedtime:0},
+			],
+		};
+		function setFanyanren(id,usedtime) {
+			fayanren.c_id=id;
+			fayanren.ren[id].usedtime=usedtime;
+			document.getElementById('isWho').innerHTML = fayanren.ren[fayanren.c_id].name;
+		}
+		
+		function stopCount(){
+			clearTimeout(t);
+			document.getElementById('start').style.display = "";   
+			document.getElementById('end').style.display = "none"; 
+		}//stopCount
+		function clearAll(){
+			setFanyanren(fayanren.c_id+1);
+
+			fayanren.ren[fayanren.c_id].usedtime=0;
+			document.getElementById('timedCount').innerHTML="0分" + "0秒";
+			clearTimeout(t);
+			document.getElementById('start').style.display ="";   
+			document.getElementById('end').style.display = "none";
+			if (fayanren.c_id == 9){
+				document.getElementById('isWho').innerHTML = "辩论结束！";
+				document.getElementById('timedCount').innerHTML="" + "";
+			}
+		}//clearAll
+		function timedCount(){
+			var temptextmin = document.getElementById('timedCount');
+			min = parseInt(fayanren.ren[fayanren.c_id].usedtime / 60);// 分钟数
+
+			lastsecs = fayanren.ren[fayanren.c_id].usedtime % 60;
+			temptextmin.innerHTML = min + "分" + lastsecs + "秒";
+			fayanren.ren[fayanren.c_id].usedtime += 1;
+			t=setTimeout("timedCount()",1000);
+			document.getElementById('start').style.display = "none";   
+			document.getElementById('end').style.display = ""; 
+			if(fayanren.ren[fayanren.c_id].usedtime==fayanren.ren[fayanren.c_id].alltime){
+				console.log(fayanren.c_id);
+				document.getElementById('end').onclick();
+				document.getElementById('clearAll').onclick();
+				fayanren.c_id += 1;
+				document.getElementById('isWho').innerHTML = fayanren.ren[fayanren.c_id].name;
+				if (fayanren.c_id == 9){
+					document.getElementById('isWho').innerHTML = "辩论结束！";
+					document.getElementById('timedCount').innerHTML="" + "";
+				}
+			}//if
+		}//timedCount
+
+		</script>
+
+		<style type="text/css">
+			.panel {
+				margin: 0 auto;
+				text-align: center;
+				background-color: #fff;
+				border-radius: 20px;
+				width: 70%;
+				height: 50%;
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				transform: translate(-50%,-50%);
+
+				filter:alpha(Opacity=80);-moz-opacity:0.5;opacity: 0.5;
+			}
+			.btn {
+			    display: inline-block;
+			    padding: .3em .5em;
+			    background-image: linear-gradient(#ddd, #bbb);
+			    border: 1px solid rgba(0,0,0,.2);
+			    border-radius: .3em;
+			    box-shadow: 0 1px white inset;
+			    text-align: center;
+			    text-shadow: 0 1px 1px black;
+			    color:white;
+			    font-weight: bold;
+			}
+			.btn:active{
+				box-shadow: .05em .1em .2em rgba(0,0,0,.6) inset;
+				border-color: rgba(0,0,0,.3);
+				background: #bbb;
+			}
+			ul{
+				list-style-type: none;
+			}
+			li{
+				float: left;
+			}
+			.show_panel{
+				margin: 0 auto;
+				text-align: center;
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				transform: translate(-50%,-50%);
+				text-align:center;
+			}
+			#txt{
+				font-size: 110px;
+			}
+			body{
+				background-image: url("bg.png") ;
+				background-size: 100% auto; 
+				background-repeat: no-repeat; 
+			}
+		</style>
+	</head>
+<body>
+
+
+<div class="panel">
+	<ul id="btnlist">
+		<li>
+			<div type="button" class="btn" id="start" onclick="timedCount()">开始</div>
+		</li>
+		<li>
+			<div type="button" class="btn" id="end" onclick="stopCount()" style="display: none;">停止</div>
+		</li>
+		<li>
+			<div type="button" class="btn" id="clearAll" onclick="clearAll()">下一人</div>
+		</li>
+	</ul>
+	<div id="txt" class="show_panel">
+		<div id="isWho">正方一辩发言</div>
+		<div id="timedCount">0分0秒</div>
+	</div>
+	<ol id="list"></ol>
+</div>
+</body>
+</html>
